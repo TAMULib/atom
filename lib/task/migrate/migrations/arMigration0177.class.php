@@ -195,25 +195,24 @@ class arMigration0177
       'taxonomy_i18n',
       'term_i18n'
     );
-    $defaultCulture = sfConfig::get('sf_default_culture', 'en');
 
     foreach($i18nTables as $i18nTable)
     {
       $baseTable = str_replace('_i18n', '', $i18nTable);
 
       // Update possible NULL values added in between migrations.
-      // The culture and id together are a unique key on the i18n tables so
-      // there shouldn't be more than a NULL value per object id.
-      $sql = 'UPDATE %s SET culture=:cul WHERE culture IS NULL;';
-      QubitPdo::modify(
-        sprintf($sql, $i18nTable),
-        array(':cul' => $defaultCulture)
-      );
       $sql = 'UPDATE %s SET source_culture=:cul WHERE source_culture IS NULL;';
       QubitPdo::modify(
         sprintf($sql, $baseTable),
-        array(':cul' => $defaultCulture)
+        array(':cul' => sfConfig::get('sf_default_culture', 'en'))
       );
+
+      // The culture and id together are a unique key on the i18n tables so
+      // there shouldn't be more than a NULL value per object id. Use the
+      // base table source_culture (fixed above) to populate missing values.
+      $sql = 'UPDATE %s i18n, %s base SET i18n.culture=base.source_culture ';
+      $sql .= 'WHERE i18n.culture IS NULL AND i18n.id=base.id;';
+      QubitPdo::modify(sprintf($sql, $i18nTable, $baseTable));
 
       // Modify columns
       $sql = 'ALTER TABLE %s MODIFY culture VARCHAR(16) NOT NULL;';
