@@ -41,7 +41,7 @@
     <dc:format><?php echo esc_specialchars(strval($item)) ?></dc:format>
   <?php endforeach; ?>
 
-  <dc:identifier><?php echo esc_specialchars(sfConfig::get('app_siteBaseUrl') .'/'.$resource->slug) ?></dc:identifier>
+  <dc:identifier><?php echo esc_specialchars(sfConfig::get('app_siteBaseUrl') . '/index.php/'. $resource->slug) ?></dc:identifier>
 
   <?php if (!empty($resource->identifier)): ?>
     <dc:identifier><?php echo esc_specialchars(strval($resource->identifier)) ?></dc:identifier>
@@ -56,7 +56,7 @@
   <?php endforeach; ?>
 
   <?php if (isset($resource->repository)): ?>
-    <dc:relation><?php echo esc_specialchars(sfConfig::get('app_siteBaseUrl').'/'.$resource->repository->slug) ?></dc:relation>
+    <dc:relation><?php echo esc_specialchars(sfConfig::get('app_siteBaseUrl') . '/index.php/'. $resource->repository->slug) ?></dc:relation>
     <dc:relation><?php echo esc_specialchars(strval($resource->repository->authorizedFormOfName)) ?></dc:relation>
   <?php endif; ?>
 
