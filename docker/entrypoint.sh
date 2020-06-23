@@ -22,8 +22,21 @@ if [ $status -ne 0 ]; then
     exit $status
 fi
 
+if [ -n "${env_web_file_permissions}" ];
+then
+	chmod -R $env_web_file_permissions $env_document_root
+fi
 
-case $1 in
+if [ -n "${env_nginx_user}" ]; 
+then
+	if [ -n "${env_nginx_group}" ]; 
+	then
+		echo "Check Ownership on Web Directory"
+		chown -R $env_nginx_user:$env_nginx_group $env_document_root
+	fi
+fi
+
+case "${env_atom_type}" in
     '')
         echo "Usage: (convenience shortcuts)"
         echo "  ./entrypoint.sh worker      Execute worker."
@@ -36,6 +49,7 @@ case $1 in
         exit 0
         ;;
     'worker')
+		echo "Start worker"
         # Give some extra time to MySQL and Gearman to start
         # and add some interval in between restarts.
         sleep 10
@@ -43,6 +57,7 @@ case $1 in
         exit 0
         ;;
     'fpm')
+		echo "Start fpm"
         trap 'kill -INT $PID' TERM INT
         php-fpm --allow-to-run-as-root &
         PID=$!

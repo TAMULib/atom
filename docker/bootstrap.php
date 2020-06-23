@@ -296,7 +296,7 @@ pm.max_children = 5
 pm.start_servers = 2
 pm.min_spare_servers = 1
 pm.max_spare_servers = 3
-env[ATOM_DEBUG_IP] = ${CONFIG['atom.debug_ip']}
+;env[ATOM_DEBUG_IP] = ${CONFIG['atom.debug_ip']}
 
 EOT;
 
