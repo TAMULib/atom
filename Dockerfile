@@ -51,6 +51,7 @@ RUN set -xe \
 
 WORKDIR /atom/src
 
+RUN dos2unix /atom/src/docker/entrypoint.sh
 ENTRYPOINT ["/atom/src/docker/entrypoint.sh"]
 
 CMD ["fpm"]

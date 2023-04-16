@@ -9,6 +9,7 @@ services:
 
   atom:
     build: ..
+    command: fpm
     env_file: etc/environment
     volumes:
       - ..:/atom/src:rw

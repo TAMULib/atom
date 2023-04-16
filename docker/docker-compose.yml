@@ -1,5 +1,4 @@
----
-version: "2"
+version: '3.2'
 
 volumes:
   elasticsearch_data:
@@ -33,15 +32,20 @@ services:
       - "8301:80"
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.16
-    env_file: etc/environment
+    image: harbor.library.tamu.edu/apache-php/elasticsearch:5.6.16-fix-2
     ulimits:
       memlock:
         soft: -1
         hard: -1
     mem_limit: 1g
     volumes:
-      - D:/data/atom/elasticsearch:/usr/share/elasticsearch/data
+      - D:/docker_files/atom/elasticsearch:/usr/share/elasticsearch/data
+    environment:
+      - 'bootstrap.memory_lock=true'      
+      - 'xpack.security.enabled=false'
+      - 'cluster.routing.allocation.disk.threshold_enabled=false'
+      - 'ES_JAVA_OPTS=-Xms640m -Xmx640m'   
+      - 'discovery.type=single-node'
     ports:
       - "127.0.0.1:8302:9200"
 
@@ -49,7 +53,7 @@ services:
     image: percona:5.7
     env_file: etc/environment
     volumes:
-      - D:/data/atom/percona:/var/lib/mysql:rw
+      - D:/docker_files/atom/atom/percona:/var/lib/mysql:rw
       - ./etc/mysql/mysqld.cnf:/etc/my.cnf.d/mysqld.cnf:ro
     ports:
       - "127.0.0.1:8303:3306"

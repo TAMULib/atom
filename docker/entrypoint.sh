@@ -24,6 +24,7 @@ fi
 
 if [ -n "${env_web_file_permissions}" ];
 then
+	echo "I am validating Web Permissions"
 	chmod -R $env_web_file_permissions $env_document_root
 fi
 
@@ -31,7 +32,7 @@ if [ -n "${env_nginx_user}" ];
 then
 	if [ -n "${env_nginx_group}" ]; 
 	then
-		echo "Check Ownership on Web Directory"
+		echo "I am validating Ownership on Web Directory"
 		chown -R $env_nginx_user:$env_nginx_group $env_document_root
 	fi
 fi
