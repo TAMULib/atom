@@ -77,6 +77,9 @@ RUN set -xe \
     && npm run build \
     && rm -rf /atom/build
 
+dos2unix /atom/src/docker/entrypoint.sh
+chmod +x /atom/src/docker/entrypoint.sh
+
 ENTRYPOINT ["docker/entrypoint.sh"]
 
 CMD ["fpm"]
