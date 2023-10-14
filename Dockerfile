@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine
+FROM php:7.4.33-fpm-alpine
 
 ENV FOP_HOME=/usr/share/fop-2.1 \
     COMPOSER_ALLOW_SUPERUSER=1 \
@@ -46,14 +46,18 @@ RUN set -xe \
       imagemagick \
       ghostscript \
       poppler-utils \
-      npm \
+##      npm \
       make \
       bash \
       gnu-libiconv \
       fcgi \
-    && npm install -g npm "less@<4.0.0" \
+##    && npm install -g npm "less@<4.0.0" \
     && curl -Ls https://archive.apache.org/dist/xmlgraphics/fop/binaries/fop-2.1-bin.tar.gz | tar xz -C /usr/share \
     && ln -sf /usr/share/fop-2.1/fop /usr/local/bin/fop
+
+RUN apk update && apk upgrade --no-cache
+RUN apk add --no-cache --virtual .phpext-builddeps npm
+RUN set -xe apk add --update nodejs npm
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -69,16 +73,8 @@ COPY . /atom/src
 
 WORKDIR /atom/src
 
-RUN set -xe \
-    && mv /atom/build/vendor/composer vendor/ \
-    && mv /atom/build/node_modules . \
-    && make -C plugins/arDominionPlugin \
-    && make -C plugins/arArchivesCanadaPlugin \
-    && npm run build \
-    && rm -rf /atom/build
-
-dos2unix /atom/src/docker/entrypoint.sh
-chmod +x /atom/src/docker/entrypoint.sh
+RUN dos2unix /atom/src/docker/entrypoint.sh
+RUN chmod +x /atom/src/docker/entrypoint.sh
 
 ENTRYPOINT ["docker/entrypoint.sh"]
 

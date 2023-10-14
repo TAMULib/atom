@@ -11,6 +11,7 @@ services:
 
   atom:
     build: ..
+    ## image: harbor.library.tamu.edu/apache-php/atom:2.7.3
     env_file: etc/environment
     environment:
       - ATOM_COVERAGE=${ATOM_COVERAGE:-false}
@@ -21,6 +22,7 @@ services:
 
   atom_worker:
     build: ..
+    ## image: harbor.library.tamu.edu/apache-php/atom_worker:2.7.3
     command: worker
     env_file: etc/environment
     environment:
