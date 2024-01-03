@@ -1,14 +1,14 @@
-# Elasticsearch
+# Elasticsearch 
 bootstrap.memory_lock=true
 xpack.security.enabled=false
 cluster.routing.allocation.disk.threshold_enabled=false
 ES_JAVA_OPTS=-Xms640m -Xmx640m
 
 # MySQL
-MYSQL_ROOT_PASSWORD=kap14lah
+MYSQL_ROOT_PASSWORD=
 MYSQL_DATABASE=atom
-MYSQL_USER=root
-MYSQL_PASSWORD=kap14lah
+MYSQL_USER=atom
+MYSQL_PASSWORD=
 
 # AtoM and AtoM worker
 ATOM_DEVELOPMENT_MODE=on
@@ -16,11 +16,11 @@ ATOM_ELASTICSEARCH_HOST=elasticsearch
 ATOM_MEMCACHED_HOST=memcached
 ATOM_GEARMAND_HOST=gearmand
 ATOM_MYSQL_DSN=mysql:host=srv-mysql;port=3306;dbname=atom;charset=utf8
-ATOM_MYSQL_USERNAME=root
-ATOM_MYSQL_PASSWORD=kap14lah
+ATOM_MYSQL_USERNAME=atom
+ATOM_MYSQL_PASSWORD=
 ATOM_DEBUG_IP=172.22.0.1
 NODE_ENV=development
-env_atom_type=(Set this as fpm or worker)
+env_atom_type=
 env_document_root=/atom/src/
 env_nginx_group=10013
 env_nginx_user=root
