@@ -89,8 +89,6 @@ all:
       alias: /uploads/r/static/conf
 
   cas:
-    enabled: true
-
     # CAS protocol version (3.0 needed if you want attributes/group mapping)
     cas_version: '3.0'
 
@@ -102,9 +100,7 @@ all:
     # SSL cert validation (recommended in prod)
     # Either point to a CA/cert file, or set false only for dev
     server_cert: false
-
-    # IMPORTANT: service_url should be the AtoM CAS login endpoint
-    service_url: https://atom-pre.library.tamu.edu/cas/login
+    auto_create_atom_user: false    
     
   oidc:
     auto_create_atom_user: false    
