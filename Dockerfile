@@ -77,6 +77,9 @@ RUN set -xe \
     && npm run build \
     && rm -rf /atom/build
 
+RUN apk add --no-cache git
+RUN git config --global --add safe.directory /atom/src
+
 ENTRYPOINT ["docker/entrypoint.sh"]
 
 CMD ["fpm"]
