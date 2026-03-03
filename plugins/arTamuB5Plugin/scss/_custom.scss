@@ -1,0 +1,43 @@
+/* TAMU Maroon Header Override */
+#top-bar.bg-dark {
+  --bs-dark-rgb: 80, 0, 0;   /* #500000 */
+  --bs-bg-opacity: 1;
+}
+
+#top-bar .nav-link,
+#top-bar .navbar-brand,
+#top-bar a:not(.dropdown-item) {
+  color: #ffffff;
+}
+
+#top-bar .nav-link:hover {
+  color: #ffcc00;
+}
+
+/* Fix user dropdown button in maroon header */
+#top-bar .btn-secondary {
+  background-color: transparent;
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+#top-bar .btn-secondary:hover,
+#top-bar .btn-secondary:focus {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+/* Improve dropdown contrast */
+#top-bar .dropdown-menu {
+  background-color: #ffffff;
+}
+
+#top-bar .dropdown-item {
+  color: #212529;
+}
+
+#top-bar .dropdown-item:hover {
+  background-color: #f0f0f0;
+  color: #000000;
+}

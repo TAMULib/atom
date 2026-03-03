@@ -19,7 +19,7 @@
 
 class arTamuB5PluginConfiguration extends sfPluginConfiguration
 {
-    public static $summary = 'Theme plugin made with Bootstrap 5.';
+    public static $summary = 'Theme plugin made with Bootstrap 5. Cloned from arDominionB5Plugin.';
     public static $version = '0.0.1';
 
     public function initialize()
