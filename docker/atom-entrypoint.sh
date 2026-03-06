@@ -6,10 +6,12 @@ set -o nounset
 # set -o xtrace
 
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+__file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
+__atom_root="/atom/src"
 
 # Clean-ups
 rm -rf /usr/local/etc/php-fpm.d/*
-rm -rf ${__dir}/../cache/*
+rm -rf ${__atom_root}/cache/*
 
 # Populate configuration files
 php ${__dir}/bootstrap.php $@
@@ -19,7 +21,7 @@ if [ $status -ne 0 ]; then
     exit $status
 fi
 
-case $1 in
+case "${env_atom_type}" in
     '')
         echo "Usage: (convenience shortcuts)"
         echo "  ./entrypoint.sh worker      Execute worker."
@@ -32,13 +34,22 @@ case $1 in
         exit 0
         ;;
     'worker')
+		echo "Start worker"
         # Give some extra time to MySQL and Gearman to start
         # and add some interval in between restarts.
         sleep 10
-        exec php ${__dir}/../symfony jobs:worker
+        php ${__dir}/../symfony jobs:worker
+        exit 0
         ;;
     'fpm')
-        exec php-fpm --allow-to-run-as-root
+		echo "Start fpm"
+        trap 'kill -INT $PID' TERM INT
+        php-fpm --allow-to-run-as-root &
+        PID=$!
+        wait $PID
+        trap - TERM INT
+        wait $PID
+        exit $?
         ;;
 esac
 

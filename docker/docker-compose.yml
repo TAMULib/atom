@@ -12,18 +12,20 @@ services:
     env_file: etc/environment
     environment:
       - ATOM_COVERAGE=${ATOM_COVERAGE:-false}
+      - env_atom_type=fpm
     volumes:
       - composer_deps:/atom/src/vendor/composer
       - npm_deps:/atom/src/node_modules
       - ..:/atom/src:rw
       - ./etc/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:ro
-    image: harbor.library.tamu.edu/apache-php/atom:2.10.1
+    image: harbor.library.tamu.edu/apache-php/atom:2.10.3
   atom_worker:
     build: ..
     command: worker
     env_file: etc/environment
     environment:
       - ATOM_COVERAGE=${ATOM_COVERAGE:-false}
+      - env_atom_type=worker      
     depends_on:
       - gearmand
       - percona
@@ -32,7 +34,7 @@ services:
       - composer_deps:/atom/src/vendor/composer
       - npm_deps:/atom/src/node_modules
       - ..:/atom/src:rw
-    image: harbor.library.tamu.edu/apache-php/atom_worker:2.10.1
+    image: harbor.library.tamu.edu/apache-php/atom_worker:2.10.3
   nginx:
     image: nginx:latest
     volumes:
