@@ -33,20 +33,7 @@ class ProjectConfiguration extends sfProjectConfiguration
     public function setup()
     {
         $this->namespacesClassLoader();
-		
-		// Inject CAS service URL from environment (Kubernetes)
-		$casServiceUrl = getenv('CAS_SERVICE_URL');
-		if ($casServiceUrl) {
-			sfConfig::set('app_cas_service_url', $casServiceUrl);
-		}
-		
-		$casEnabled = getenv('CAS_ENABLED');
-		if ($casEnabled !== false) {
-			// Convert string to boolean safely
-			$casEnabledBool = filter_var($casEnabled, FILTER_VALIDATE_BOOLEAN);
-			sfConfig::set('app_cas_enabled', $casEnabledBool);
-		}
-		
+
         $plugins = [
             'qbAclPlugin',
             'qtAccessionPlugin',
@@ -59,6 +46,7 @@ class ProjectConfiguration extends sfProjectConfiguration
             'sfWebBrowserPlugin',
             // sfPluginAdminPlugin depends on sfPropelPlugin
             'sfPluginAdminPlugin',
+            // 'arCasPlugin',
         ];
 
         // Check if the OIDC plugin should be enabled.

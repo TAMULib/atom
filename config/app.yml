@@ -87,20 +87,3 @@ all:
   static:
       path: uploads/r/static/conf
       alias: /uploads/r/static/conf
-
-  cas:
-    # CAS protocol version (3.0 needed if you want attributes/group mapping)
-    cas_version: '3.0'
-
-    # CAS server connection pieces
-    server_name: cas.tamu.edu
-    server_port: 443
-    server_path: /cas
-
-    # SSL cert validation (recommended in prod)
-    # Either point to a CA/cert file, or set false only for dev
-    server_cert: false
-    auto_create_atom_user: false    
-    
-  oidc:
-    auto_create_atom_user: false    
