@@ -9,9 +9,12 @@ __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __atom_root="/atom/src"
 
+if [ "$env_cas_enabled" = "yup" ]; then 
+	sed -i "s,// 'arCasPlugin','arCasPlugin',g" /atom/src/config/ProjectConfiguration.class.php
+fi
 
 if [ "$env_cas_enabled" = "yup" ]; then 
-	sed -i "s,//'arCasPlugin','arCasPlugin',g" /atom/src/config/ProjectConfiguration.class.php
+	sed -i "s,class: myUser,class: casUser,g" /atom/src/config/factories.yml
 fi
 
 if [ "$env_cas_enabled" = "yup" ]; then 
