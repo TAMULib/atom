@@ -9,6 +9,21 @@ __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __atom_root="/atom/src"
 
+
+if [ "$env_cas_enabled" = "yup" ]; then 
+	sed -i "s,//'arCasPlugin','arCasPlugin',g" /atom/src/config/ProjectConfiguration.class.php
+fi
+
+if [ "$env_cas_enabled" = "yup" ]; then 
+	sed -i "s,{{cas_service_url}},$env_cas_service_url,g" /atom/src/plugins/arCasPlugin/config/app.yml
+fi
+
+if [ "$env_cas_enabled" = "yup" ]; then 
+	sed -i "s,{{cas_server}},$env_cas_server,g" /atom/src/plugins/arCasPlugin/config/app.yml
+fi
+
+# login_module: cas
+
 # Clean-ups
 rm -rf /usr/local/etc/php-fpm.d/*
 rm -rf ${__atom_root}/cache/*
