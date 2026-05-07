@@ -19,10 +19,14 @@ fi
 
 if [ "$env_cas_enabled" = "yup" ]; then 
 	sed -i "s,{{cas_service_url}},$env_cas_service_url,g" /atom/src/plugins/arCasPlugin/config/app.yml
+else
+	sed -i "s,{{cas_service_url}},,g" /atom/src/plugins/arCasPlugin/config/app.yml
 fi
 
 if [ "$env_cas_enabled" = "yup" ]; then 
 	sed -i "s,{{cas_server}},$env_cas_server,g" /atom/src/plugins/arCasPlugin/config/app.yml
+else 
+	sed -i "s,{{cas_server}},,g" /atom/src/plugins/arCasPlugin/config/app.yml
 fi
 
 # login_module: cas

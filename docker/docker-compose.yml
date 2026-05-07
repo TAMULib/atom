@@ -13,7 +13,9 @@ services:
     environment:
       - ATOM_COVERAGE=${ATOM_COVERAGE:-false}
       - env_atom_type=fpm
-      - env_cas_enabled=yup
+      - env_cas_enabled=nah
+      - env_cas_service_url=
+      - env_cas_server=
     volumes:
       - composer_deps:/atom/src/vendor/composer
       - npm_deps:/atom/src/node_modules
@@ -27,7 +29,9 @@ services:
     environment:
       - ATOM_COVERAGE=${ATOM_COVERAGE:-false}
       - env_atom_type=worker
-      - env_cas_enabled=yup
+      - env_cas_enabled=nah
+      - env_cas_service_url=
+      - env_cas_server=
     depends_on:
       - gearmand
       - percona
