@@ -63,20 +63,17 @@ all:
   # Content Security Policy (CSP) header configuration. CSP settings are used
   # only when a B5 theme is in use, otherwise these settings will be ignored.
   csp:
-      # Configure CSP response header to be either
-      # 'Content-Security-Policy-Report-Only' or 'Content-Security-Policy'
-      response_header: Content-Security-Policy
-      # Configure CSP response directives.
-      directives: >
-        default-src 'self';
-        font-src 'self' https://fonts.gstatic.com;
-        form-action 'self' https://cas.tamu.edu;
-        img-src 'self' https://*.googleapis.com https://*.gstatic.com *.google.com  *.googleusercontent.com data: https://www.gravatar.com/avatar/ https://*.google-analytics.com https://*.googletagmanager.com blob:;
-        script-src 'self' https://*.googletagmanager.com 'nonce' https://*.googleapis.com https://*.gstatic.com *.google.com https://*.ggpht.com *.googleusercontent.com blob:;
-        style-src 'self' 'nonce' https://fonts.googleapis.com;
-        worker-src 'self' blob:;
-        connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.googleapis.com *.google.com https://*.gstatic.com  data: blob:;
-        frame-ancestors 'self';
+    response_header: Content-Security-Policy
+    directives: >
+      default-src 'self';
+      font-src 'self' https://fonts.gstatic.com;
+      form-action 'self' https://cas.tamu.edu https://cas-dev.tamu.edu http://localhost:63001;
+      img-src 'self' https://*.googleapis.com https://*.gstatic.com *.google.com *.googleusercontent.com data: https://www.gravatar.com/avatar/ https://*.google-analytics.com https://*.googletagmanager.com blob:;
+      script-src 'self' https://*.googletagmanager.com 'nonce' https://*.googleapis.com https://*.gstatic.com *.google.com https://*.ggpht.com *.googleusercontent.com blob:;
+      style-src 'self' 'nonce' https://fonts.googleapis.com;
+      worker-src 'self' blob:;
+      connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.googleapis.com *.google.com https://*.gstatic.com data: blob:;
+      frame-ancestors 'self';
 
   ldap:
       enable_tls_encryption: true
