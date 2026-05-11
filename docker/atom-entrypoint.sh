@@ -9,6 +9,9 @@ __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 __file="${__dir}/$(basename "${BASH_SOURCE[0]}")"
 __atom_root="/atom/src"
 
+
+# login_module: cas
+
 if [ "$env_cas_enabled" = "yup" ]; then 
 	sed -i "s,// 'arCasPlugin','arCasPlugin',g" /atom/src/config/ProjectConfiguration.class.php
 fi
@@ -32,8 +35,13 @@ fi
 # login_module: cas
 
 # Clean-ups
-rm -rf /usr/local/etc/php-fpm.d/*
-rm -rf ${__atom_root}/cache/*
+if [ -d "/usr/local/etc/php-fpm.d" ]; then
+    rm -rf /usr/local/etc/php-fpm.d/*
+fi
+
+if [ -n "${__atom_root}" ] && [ -d "${__atom_root}/cache" ]; then
+    rm -rf "${__atom_root}/cache"/*
+fi
 
 # Populate configuration files
 php ${__dir}/bootstrap.php $@
