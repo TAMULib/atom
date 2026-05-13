@@ -39,8 +39,11 @@ if [ -d "/usr/local/etc/php-fpm.d" ]; then
     rm -rf /usr/local/etc/php-fpm.d/*
 fi
 
-if [ -n "${__atom_root}" ] && [ -d "${__atom_root}/cache" ]; then
-    rm -rf "${__atom_root}/cache"/*
+# see about clearing the prod cache directory
+if [ -n "${__atom_root}" ] && [ -d "${__atom_root}/cache/prod/${env_atom_type:-}" ]; then
+	echo "Clearing cache: ${__atom_root}/cache/prod/${env_atom_type:-}"
+    rm -rf "${__atom_root}/cache/prod/${env_atom_type:-}/"*
+	echo "Done"
 fi
 
 # Populate configuration files
