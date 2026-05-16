@@ -110,11 +110,22 @@ class UserEditAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
-            case 'username':
-                $this->form->setDefault('username', $this->resource->username);
-                $this->form->setValidator('username', new sfValidatorString(['required' => true]));
-                $this->form->setWidget('username', new sfWidgetFormInput());
-                break;
+			case 'username':
+				$resourceAlreadyExists = isset($this->getRoute()->resource);
+
+				$this->form->setDefault('username', $this->resource->username);
+				$this->form->setValidator('username', new sfValidatorString(['required' => true]));
+
+				if ($resourceAlreadyExists) {
+					$this->form->setWidget('username', new sfWidgetFormInput([
+						'type' => 'text',
+					], [
+						'readonly' => 'readonly',
+						'class' => 'form-control',
+					]));
+				} else {
+					$this->form->setWidget('username', new sfWidgetFormInput());
+				}
 
             case 'email':
                 $this->form->setDefault('email', $this->resource->email);
