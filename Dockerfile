@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine
+FROM php:8.3.36-fpm-alpine
 
 ENV FOP_HOME=/usr/share/fop-2.1 \
     COMPOSER_ALLOW_SUPERUSER=1 \
