@@ -33,53 +33,20 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
      */
     public function authenticate($username = null, $password = null)
     {
+        $authenticated = false;
 
-    $authenticated = false;
+        arCAS::initializePhpCAS();
+        phpCAS::forceAuthentication();
+        $username = phpCAS::getUser();
 
-    arCAS::initializePhpCAS();
-    phpCAS::forceAuthentication();
-    $username = phpCAS::getUser();
-
-    // Load existing AtoM user by CAS username.
-    // Do not auto-create users; deny login if no matching local account exists.
-    $criteria = new Criteria();
-    $criteria->add(QubitUser::USERNAME, $username);
-
-// Removed the auto creation of accounts - DCH 5-15
-
-//        // Load user using username or, if one doesn't exist, create it.
-//        $criteria = new Criteria();
-//        $criteria->add(QubitUser::USERNAME, $username);
-//        if (null === $user = QubitUser::getOne($criteria)) {
-//            $user = new QubitUser();
-//            $user->username = $username;
-//            $user->save();
-//        }
-
-// Add user check and active account check - DCH 5-15
-
-    if (null === $user = QubitUser::getOne($criteria)) {
-        sfContext::getInstance()->getLogger()->err(
-            sprintf('CAS login denied: no matching AtoM user for "%s"', $username)
-        );
-
-        sfContext::getInstance()->getController()->redirect('@homepage');
-
-        return false;
-    }
-
-    // Deny login if the local AtoM account exists but is inactive.
-    if (!$user->active) {
-        sfContext::getInstance()->getLogger()->err(
-            sprintf('CAS login denied: inactive AtoM user "%s"', $username)
-        );
-
-        sfContext::getInstance()->getController()->redirect('@homepage');
-
-        return false;
-    }
-	
-//////
+        // Load user using username or, if one doesn't exist, create it.
+        $criteria = new Criteria();
+        $criteria->add(QubitUser::USERNAME, $username);
+        if (null === $user = QubitUser::getOne($criteria)) {
+            $user = new QubitUser();
+            $user->username = $username;
+            $user->save();
+        }
 
         // Parse CAS attributes into group memberships. If enabled, we perform this
         // check each time a user authenticates so that changes made on the CAS
@@ -99,7 +66,6 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
         $this->signIn(QubitUser::getById($user->id));
 
         return $authenticated;
-
     }
 
     /**

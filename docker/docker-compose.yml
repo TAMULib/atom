@@ -21,7 +21,7 @@ services:
       - npm_deps:/atom/src/node_modules
       - ..:/atom/src:rw
       - ./etc/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:ro
-    image: harbor.library.tamu.edu/apache-php/atom-php8.3.36:2.10.1
+    image: harbor.library.tamu.edu/apache-php/atom-php8.3.36:2.10.2
   atom_worker:
     build: ..
     command: worker
@@ -40,7 +40,7 @@ services:
       - composer_deps:/atom/src/vendor/composer
       - npm_deps:/atom/src/node_modules
       - ..:/atom/src:rw
-    image: harbor.library.tamu.edu/apache-php/atom_worker-php8.3.36:2.10.1
+    image: harbor.library.tamu.edu/apache-php/atom_worker-php8.3.36:2.10.2
   nginx:
     image: nginx:latest
     volumes:
