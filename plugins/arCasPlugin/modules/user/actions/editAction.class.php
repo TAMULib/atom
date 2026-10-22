@@ -21,11 +21,13 @@ class UserEditAction extends DefaultEditAction
 {
     // Arrays not allowed in class constants
     public static $NAMES = [
-        'active',
-        'groups',
-        'translate',
-        'restApiKey',
-        'oaiApiKey',
+    'active',
+    'email',
+    'groups',
+    'translate',
+    'username',
+    'restApiKey',
+    'oaiApiKey',
     ];
 
     public function execute($request)
@@ -108,6 +110,29 @@ class UserEditAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
+			case 'username':
+				$resourceAlreadyExists = isset($this->getRoute()->resource);
+
+				$this->form->setDefault('username', $this->resource->username);
+				$this->form->setValidator('username', new sfValidatorString(['required' => true]));
+
+				if ($resourceAlreadyExists) {
+					$this->form->setWidget('username', new sfWidgetFormInput([
+						'type' => 'text',
+					], [
+						'readonly' => 'readonly',
+						'class' => 'form-control',
+					]));
+				} else {
+					$this->form->setWidget('username', new sfWidgetFormInput());
+				}
+
+            case 'email':
+                $this->form->setDefault('email', $this->resource->email);
+                $this->form->setValidator('email', new sfValidatorEmail(['required' => false]));
+                $this->form->setWidget('email', new sfWidgetFormInput());
+                break;
+
             case 'active':
                 if (isset($this->resource->id)) {
                     $this->form->setDefault('active', (bool) $this->resource->active);
